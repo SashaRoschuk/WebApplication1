@@ -1,0 +1,87 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+img{
+    text-align:center;
+    width:80%;
+}
+.specs_info {
+    font-family: 'Roboto', wtfSymbols, sans-serif !important;
+    color: #222222;
+    line-height: 1.6;
+    direction: ltr;
+    border: 1px solid #DBE0E2;
+    position: relative;
+    padding: 14px 15px 16px;
+    display: grid;
+    margin: 10px 0;
+    border-radius: 3px;
+    font-size: 17px;
+}
+.specs_feature {
+    font-family: 'Roboto', wtfSymbols, sans-serif !important;
+    color: #222222;
+    line-height: 1.6;
+    direction: ltr;
+    font-size: 17px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.specs_char{
+
+}
+.specs_char_block{
+    font-family: 'Roboto',wtfSymbols,sans-serif !important;
+    color: #222222;
+    direction: ltr;
+    font-size: 17px;
+    line-height: 24px;
+    break-inside: avoid;
+    padding-bottom: 7px;
+}
+.specs_char_line{
+    font-family: 'Roboto',wtfSymbols,sans-serif !important;
+    color: #222222;
+    direction: ltr;
+    font-size: 17px;
+    line-height: 24px;
+    border-bottom: 1px dashed #aaaaaa;
+    margin-bottom: 5px;
+    min-height: 23px;
+    padding-bottom: 3px;
+    overflow: hidden;
+}
+.specs_char_line_indent{
+    font-family: 'Roboto',wtfSymbols,sans-serif !important;
+    color: #222222;
+    direction: ltr;
+    font-size: 17px;
+    line-height: 24px;
+    border-bottom: 1px dashed #aaaaaa;
+    margin-bottom: 5px;
+    min-height: 23px;
+    padding-bottom: 3px;
+    overflow: hidden;
+    margin-left: 20px;
+}

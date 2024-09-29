@@ -1,0 +1,33 @@
+﻿@model List<ProductDB.Entities.Product>
+
+@if (@Model.Any())
+{
+    <p>Count of Products : @Model.Count</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var product in @Model)
+        {
+            <div class="col">
+                <div class="card">
+                    @*  <img src="..." class="card-img-top" alt="..."> *@
+                    <div class="card-body">
+                       @* <img src="@product.Image">*@
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">
+                            
+
+                            <span class="badge bg-primary">@product.Price grn</span>
+                        </p>
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dark">Show Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary mt-4">Create New Product</a>
+}
+else
+{
+    <p>No product here yet!!!</p>
+}
