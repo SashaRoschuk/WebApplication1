@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductDB;
 
@@ -10,9 +11,11 @@ using ProductDB;
 namespace ProductDB.Migrations
 {
     [DbContext(typeof(ShopDBcontext))]
-    partial class ShopDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20241005094436_Image")]
+    partial class Image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +104,6 @@ namespace ProductDB.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "",
-                            Image = "https://m.media-amazon.com/images/I/615rI0PoyOL.jpg",
                             Name = "Google Pixel 7 Pro",
                             Price = 7800
                         },

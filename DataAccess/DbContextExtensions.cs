@@ -33,6 +33,7 @@ namespace ProductDB
                     Id = 1,
                     Name = "Google Pixel 7 Pro",
                     Price = 7800,
+                    Image=@"https://m.media-amazon.com/images/I/615rI0PoyOL.jpg",
                     CategoryId = 1
                 },
                 new Product()
@@ -65,7 +66,7 @@ namespace ProductDB
                 }
 
 
-            });
+            }); ;
         }
     }
 }

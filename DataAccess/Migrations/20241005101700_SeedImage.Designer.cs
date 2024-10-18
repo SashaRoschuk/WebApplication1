@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductDB;
 
@@ -10,9 +11,11 @@ using ProductDB;
 namespace ProductDB.Migrations
 {
     [DbContext(typeof(ShopDBcontext))]
-    partial class ShopDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20241005101700_SeedImage")]
+    partial class SeedImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -6,24 +6,26 @@ using Microsoft.EntityFrameworkCore;
 using ProductDB;
 using ProductDB.Entities;
 using System.Collections.Generic;
+using WebApplication1.Services;
 
 using WebApplication1.Models;
+using WebApplication1.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.Controllers
 {
-
+    //coment1
     public class ShopController : Controller
     {
-        private readonly ShopDBcontext dbContext;
-        
-        public ShopController(ShopDBcontext context)
+        private readonly IEntityService service;
+        ProductValidator validator = new ProductValidator();
+        public ShopController(IEntityService service)
         {
-            
-            dbContext = context;
+            this.service = service;
         }
-     
+
         // GET: HomeController1
-        
+
         public ActionResult Index()
         {
             return View();
@@ -32,65 +34,71 @@ namespace WebApplication1.Controllers
         // GET: HomeController1/Details/5
         public ActionResult Details(int id)//100
         {
-            var product = dbContext.Products.Find(id);
+            var product = service.GetById(id);
             if (product == null) { return NotFound(); }
             return View(product);
         }
 
         // GET: HomeController1/Create
-        
+
 
         public ActionResult Products()
         {
-         
 
-            return View(dbContext.Products.ToList());
+
+            return View(service.GetAll());
         }
-        
+
 
         // GET: HomeController1/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-            return View();
+            Product p = service.GetById(id);
+            if (p == null) { return NotFound(); }
+            Categorylist();
+            return View(p);
         }
 
         // POST: HomeController1/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(Product p)
         {
-            try
+            var validationResult = validator.Validate(p);
+
+            if (!validationResult.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                // Обробка помилок валідації
+                return View(p);
             }
-            catch
-            {
-                return View();
-            }
+            service.Edit(p);
+
+
+            return RedirectToAction(nameof(Products));
+
         }
 
-        
+
 
         // POST: HomeController1/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var product = dbContext.Products.FirstOrDefault(p => p.Id == id);
-            if (product != null)
-            {
-                dbContext.Remove(product);
-                dbContext.SaveChanges();
-            }
+            service.Delete(id);
 
             return RedirectToAction(nameof(Products));
         }
+        private void Categorylist()
+        {
+            ViewBag.CategoryList = new SelectList(service.GetAllCategory(),
+                        nameof(Category.Id), nameof(Category.Name));
+        }
         public IActionResult Create()
         {
+
             //ViewData and ViewBag
             //ViewData["List"] = new List<int> { 1, 2, 3 }; // List as Object
-            ViewBag.CategoryList = new SelectList(dbContext.Categories.ToList(),
-            nameof(Category.Id), nameof(Category.Name));
+            Categorylist();
             return View();
         }
 
@@ -98,8 +106,19 @@ namespace WebApplication1.Controllers
         public IActionResult Create(ProductDB.Entities.Product product)
         {
             //add to database
-            dbContext.Products.Add(product);
-            dbContext.SaveChanges();
+            
+
+            // Виконайте валідацію
+            var validationResult = validator.Validate(product);
+
+            if (!validationResult.IsValid)
+            {
+                // Обробка помилок валідації
+                return View(product);
+            }
+
+            service.Create(product);
+
             return RedirectToAction(nameof(Index));
         }
     }

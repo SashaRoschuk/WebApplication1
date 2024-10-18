@@ -30,6 +30,7 @@ namespace ProductDB
 
             modelBuilder.Entity<Product>().HasOne(c => c.Category).WithMany(p => p.Products).HasForeignKey(c => c.CategoryId);
             //Initialization - Seeder
+            modelBuilder.Entity<Product>().Property(p=>p.Name).IsRequired().HasMaxLength(200);
             modelBuilder.SeedCategory();
             modelBuilder.SeedProducts();
             

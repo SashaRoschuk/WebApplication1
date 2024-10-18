@@ -10,8 +10,9 @@ namespace ProductDB.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        
-        public string Description { get; set; } = string.Empty;
+
+        public string? Image { get; set; }
+        public string? Description { get; set; } = string.Empty;
         public Category Category { get; set; }
         public int CategoryId { get; set; }
 

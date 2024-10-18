@@ -1,17 +1,13 @@
 ﻿@model ProductDB.Entities.Product
+
 <h1>Create New Product</h1>
 
-<form asp-action="Create" method="post" class="row g-3">
-    <div class="col-md-12">
-        <div asp-validation-summary="All" class="text-danger"></div>
-    </div>
-
+<form asp-action="Edit" method="post" class="row g-3">
     <div class="col-md-6">
         <label asp-for="Name" class="form-label">Name</label>
         <input asp-for="Name" type="text" class="form-control" placeholder="Enter name">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-
     <div class="col-md-6">
         <label asp-for="Price" class="form-label">Price</label>
         <input asp-for="Price" type="number" class="form-control" placeholder="Enter price">
@@ -25,7 +21,6 @@
         </select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
-
     <div class="col-md-12">
         <label asp-for="Image" class="form-label">Image</label>
         <input asp-for="Image" type="text" class="form-control" placeholder="Enter url">
@@ -33,13 +28,11 @@
     </div>
 
     <div class="col-6">
-        <button type="submit" class="btn btn-primary w-100">Create</button>
+        <button type="submit" formmethod="post" class="btn btn-primary w-100">Edit</button>
     </div>
     <div class="col-6">
         <a asp-action="Index" class="btn btn-primary w-100">Back</a>
     </div>
 </form>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+
