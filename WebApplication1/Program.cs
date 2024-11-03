@@ -3,6 +3,8 @@ using ProductDB;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using WebApplication1.Services;
+using Businesslogic.Intefaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,18 @@ builder.Services.AddDbContext<ShopDBcontext>(opt => opt.UseSqlServer(connString)
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddSession(options =>
+{
+    //options.IdleTimeout = TimeSpan.FromDays(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IProductService, Service>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +46,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

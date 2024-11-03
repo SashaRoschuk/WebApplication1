@@ -17,5 +17,6 @@ namespace ProductDB.Entities
         public int CategoryId { get; set; }
 
         public int Price { get; set; }
+        public ICollection<Cart> carts { get; set; }
     }
 }

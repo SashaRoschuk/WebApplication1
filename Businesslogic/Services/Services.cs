@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Businesslogic.Intefaces;
 using ProductDB;
 using ProductDB.Entities;
 
@@ -13,16 +14,10 @@ namespace WebApplication1.Services
 
 
 
-    public interface IEntityService
+    public interface IEntityService :  ICategoryService , IProductService
     {
         //CRUD Interface
-        List<Category> GetAllCategory();
-        List<Product> GetAll();
-        List<Category> GetCategories();
-        Product? GetById(int id);
-        void Create(Product product);
-        void Edit(Product product);
-        void Delete(int id);
+        
     }
     public class Service : IEntityService
     {
@@ -75,6 +70,11 @@ namespace WebApplication1.Services
         public List<Category> GetCategories()
         {
             return context.Categories.ToList();
+        }
+        public List<Product> Get(int[] ids)
+        {
+            return context.Products.Where(p =>ids.Contains(p.Id)).ToList();
+            //return productRepo.Get(p => ids.Contains(p.Id)).ToList();
         }
     }
 

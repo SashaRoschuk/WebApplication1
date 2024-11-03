@@ -32,10 +32,11 @@ namespace WebApplication1.Controllers
         }
 
         // GET: HomeController1/Details/5
-        public ActionResult Details(int id)//100
+        public ActionResult Details(int id,string returnUrl = null)//100
         {
             var product = service.GetById(id);
             if (product == null) { return NotFound(); }
+            ViewBag.ReturnUrl = returnUrl;
             return View(product);
         }
 

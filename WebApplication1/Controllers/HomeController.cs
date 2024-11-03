@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication1.Models;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IEntityService service;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IEntityService service)
         {
+            this.service = service;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(service.GetAll());
         }
         public IActionResult Plane()
         {

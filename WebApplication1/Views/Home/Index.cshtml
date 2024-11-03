@@ -1,4 +1,8 @@
-﻿@{
+﻿@using WebApplication1.Services 
+@using Businesslogic.Intefaces
+@model List<ProductDB.Entities.Product>
+@inject ICartService CartService
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +10,59 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+
+@if (@Model.Any())
+{
+    <p>Count of Products : @Model.Count</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        
+        @foreach (var product in @Model)
+        {
+            <div class="col">
+                <a asp-controller="Shop" asp-action="Details" asp-route-id="@product.Id" class="card-link-block">
+                <div class="card">
+                    <img src="@product.Image" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        @* <img src="@product.Image">*@
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">
+
+
+                            <span class="badge bg-primary">@product.Price grn</span>
+                                
+                        </p>
+                            @if (CartService.IsInCart(product.Id))
+                            {
+                                            <a asp-controller="Cart" asp-action="Remove" asp-route-productId="@product.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-danger mt-2">
+                                                <i class="bi bi-bag-plus mr-3"></i>Remove from Cart
+                                            </a>
+
+                            }
+                            else
+                            {
+                                        <a asp-controller="Cart" asp-action="Add" asp-route-productId="@product.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-success mt-2">
+                                            <i class="bi bi-bag-plus mr-3"></i>Add to Cart
+                                        </a>
+                            }
+                            @* <a class="btn btn-outline-success mt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z" />
+                                </svg>
+                            </a> *@
+
+                    </div>
+                </div>
+                </a>
+            </div>
+        }
+       
+    </div>
+
+    
+}
+else
+{
+    <p>No product here yet!!!</p>
+}

@@ -18,7 +18,7 @@
 
                             <span class="badge bg-primary">@product.Price grn</span>
                         </p>
-                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dark">Show Details</a>
+                        <a asp-action="Details" asp-route-id="@product.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-dark">Show Details</a>
                        
                     </div>
                 </div>
