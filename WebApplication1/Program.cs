@@ -4,6 +4,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using WebApplication1.Services;
 using Businesslogic.Intefaces;
+using DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Ðåºñòðàö³ÿ IEntityService
-builder.Services.AddScoped<IEntityService, Service>();
+
+
 
 string connString = builder.Configuration.GetConnectionString("shopdb")!;
 builder.Services.AddDbContext<ShopDBcontext>(opt => opt.UseSqlServer(connString));
@@ -29,7 +31,17 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IProductService, Service>();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IEntityService, ProductService>();
+
+builder.Services.AddScoped<ShopDBcontext>();
+builder.Services.AddScoped(typeof(DataAccess.Interfaces.IRepository<>), typeof(DataAccess.Repository<>));
+
+
+
+
 
 
 var app = builder.Build();

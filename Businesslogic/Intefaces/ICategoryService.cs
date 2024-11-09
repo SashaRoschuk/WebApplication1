@@ -11,7 +11,7 @@ namespace Businesslogic.Intefaces
     {
         //CRUD Interface
         
-        List<Category> GetAllCategory();
+        List<Category> GetCategories();
        
         //void Create(Category product);
         //void Edit(Category product);

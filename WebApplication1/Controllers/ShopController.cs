@@ -7,7 +7,7 @@ using ProductDB;
 using ProductDB.Entities;
 using System.Collections.Generic;
 using WebApplication1.Services;
-
+using Businesslogic.Intefaces;
 using WebApplication1.Models;
 using WebApplication1.Validators;
 using System.ComponentModel.DataAnnotations;
@@ -91,7 +91,7 @@ namespace WebApplication1.Controllers
         }
         private void Categorylist()
         {
-            ViewBag.CategoryList = new SelectList(service.GetAllCategory(),
+            ViewBag.CategoryList = new SelectList(service.GetCategories(),
                         nameof(Category.Id), nameof(Category.Name));
         }
         public IActionResult Create()

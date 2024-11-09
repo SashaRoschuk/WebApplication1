@@ -6,10 +6,10 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace ProductDB
 {
-    public class ShopDBcontext : DbContext
+    public class ShopDBcontext : IdentityDbContext
     {
         public ShopDBcontext() :base() { }
 
@@ -17,6 +17,8 @@ namespace ProductDB
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<User> Users {  get; set; }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);
