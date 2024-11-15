@@ -4,12 +4,13 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using WebApplication1.Services;
 using Businesslogic.Intefaces;
-using DataAccess.Interfaces;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.AspNetCore.Identity;
 using ProductDB.Entities;
 using BusinessLogic.Services;
 using BusinessLogic.Interfaces;
+using WebApplication1;
+using Businesslogic.Services;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +65,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<IEntityService, ProductService>();
 
+builder.Services.AddScoped<IMailService, MailService>();
+
 builder.Services.AddScoped<ShopDBcontext>();
 
 builder.Services.AddScoped(typeof(DataAccess.Interfaces.IRepository<>), typeof(DataAccess.Repository<>));
@@ -74,6 +77,12 @@ builder.Services.AddScoped(typeof(DataAccess.Interfaces.IRepository<>), typeof(D
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    Seeder.SeedRoles(scope.ServiceProvider).Wait();
+    Seeder.SeedAdmin(scope.ServiceProvider).Wait();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

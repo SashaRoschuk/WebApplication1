@@ -1,0 +1,33 @@
+﻿@model ProductDB.Entities.Category
+<h1>Create new Category</h1>
+
+<form asp-action="DeleteCategory" method="post" class="row g-3">
+    <div class="col-md-12">
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+
+ 
+
+    <div class="col-md-12">
+        <label asp-for="Id" class="form-label">Category</label>
+        <select asp-for="Id" asp-items="@ViewBag.CategoryList" class="form-select">
+            <option selected>Choose...</option>
+        </select>
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <div class="col-6">
+        <button asp-action="DeleteCategory" asp-route-id="Id" class="btn btn-primary w-100">Delete</button>
+    </div>
+    @* <form asp-action="DeleteCategory" asp-route-id="@Model.Id" method="post" class="d-inline">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    </form> *@
+    <div class="col-6">
+        <a asp-action="Index" class="btn btn-primary w-100">Back</a>
+    </div>
+</form>
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ *@

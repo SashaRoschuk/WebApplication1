@@ -11,10 +11,12 @@ using Businesslogic.Intefaces;
 using WebApplication1.Models;
 using WebApplication1.Validators;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
     //coment1
+    [Authorize(Roles = "Admin")]
     public class ShopController : Controller
     {
         private readonly IEntityService service;
@@ -25,13 +27,14 @@ namespace WebApplication1.Controllers
         }
 
         // GET: HomeController1
-
+        
         public ActionResult Index()
         {
             return View();
         }
 
         // GET: HomeController1/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int id,string returnUrl = null)//100
         {
             var product = service.GetById(id);
@@ -42,7 +45,7 @@ namespace WebApplication1.Controllers
 
         // GET: HomeController1/Create
 
-
+        [AllowAnonymous]
         public ActionResult Products()
         {
 
@@ -119,6 +122,42 @@ namespace WebApplication1.Controllers
             }
 
             service.Create(product);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCategory(int id)
+        {
+            service.DeleteCategory(id);
+
+            return RedirectToAction(nameof(Products));
+        }
+
+       
+        public IActionResult DeleteCategory()
+        {
+
+            Categorylist();
+            return View();
+        }
+
+
+        public IActionResult CreateCategory()
+        {
+
+
+            Categorylist();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCategory(ProductDB.Entities.Category category)
+        {
+
+            
+
+            service.CreateCategory(category);
 
             return RedirectToAction(nameof(Index));
         }

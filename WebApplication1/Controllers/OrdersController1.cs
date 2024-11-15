@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Interfaces;
+﻿using Businesslogic.Intefaces;
+using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -9,10 +10,14 @@ namespace WebApplication1.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrderService orderService;
+        private readonly IMailService mailService;
         private string GetUseId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        public OrdersController(IOrderService orderService)
+
+        private string UserName => User.FindFirstValue(ClaimTypes.Name)!;
+        public OrdersController(IOrderService orderService,IMailService mailService)
         {
             this.orderService = orderService;
+            this.mailService = mailService;
         }
         // [AllowAnonymous]
         public IActionResult Index()
@@ -28,6 +33,7 @@ namespace WebApplication1.Controllers
             //cartService.GetProducts
 
             orderService.Create(GetUseId());
+            mailService.SendMailAsync("Test","Order was confirmed!",UserName);
 
             return RedirectToAction(nameof(Index));
         }
