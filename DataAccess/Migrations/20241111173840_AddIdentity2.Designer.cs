@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductDB;
 
@@ -11,9 +12,11 @@ using ProductDB;
 namespace ProductDB.Migrations
 {
     [DbContext(typeof(ShopDBcontext))]
-    partial class ShopDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20241111173840_AddIdentity2")]
+    partial class AddIdentity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,7 +256,7 @@ namespace ProductDB.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("ProductDB.Entities.Product", b =>

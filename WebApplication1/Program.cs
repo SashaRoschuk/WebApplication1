@@ -6,6 +6,10 @@ using WebApplication1.Services;
 using Businesslogic.Intefaces;
 using DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.AspNetCore.Identity;
+using ProductDB.Entities;
+using BusinessLogic.Services;
+using BusinessLogic.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +22,28 @@ builder.Services.AddControllersWithViews();
 
 string connString = builder.Configuration.GetConnectionString("shopdb")!;
 builder.Services.AddDbContext<ShopDBcontext>(opt => opt.UseSqlServer(connString));
+
+//builder.Services.AddDefaultIdentity<User>
+//    (options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ShopDBcontext>();
+
+
+//builder.Services.AddDefaultIdentity<User>
+//    (options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddRoles<IdentityRole>()
+//    .AddRoleManager<RoleManager<IdentityRole>>()
+//    .AddEntityFrameworkStores<ShopDBcontext>();
+
+
+
+builder.Services.AddIdentity<User, IdentityRole>()
+               .AddDefaultUI()
+               .AddDefaultTokenProviders()
+               .AddEntityFrameworkStores<ShopDBcontext>();
+
+
+
+
+
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
@@ -32,11 +58,14 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICartService, CartService>();
 
+builder.Services.AddScoped<IOrderService, OrderService>();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<IEntityService, ProductService>();
 
 builder.Services.AddScoped<ShopDBcontext>();
+
 builder.Services.AddScoped(typeof(DataAccess.Interfaces.IRepository<>), typeof(DataAccess.Repository<>));
 
 
@@ -60,7 +89,10 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
